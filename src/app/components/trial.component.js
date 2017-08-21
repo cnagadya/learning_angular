@@ -16,8 +16,8 @@ var TrialComponent = (function () {
         console.log('Hello from trial constructor');
         this.name = 'Christine Nagadya';
         this.todo = {
-            'Mon - Wed': 'SIMS & Skillsets',
-            'Thur - Fri': 'Checkpoints'
+            'Mon': 'SIMS & Skillsets',
+            'Thur': 'Checkpoints'
         };
         this.showtasks = true;
     }
@@ -29,18 +29,22 @@ var TrialComponent = (function () {
             this.showtasks = true;
         }
     };
+    TrialComponent.prototype.addTask = function (tasks) {
+        console.log(tasks.day);
+        this.todo[tasks.day] = [tasks.task]; // push if array
+    };
+    TrialComponent.prototype.deleteTask = function (i) {
+        console.log("deleted " + Object.keys(this.todo)[i] + " tasks");
+        delete this.todo[Object.keys(this.todo)[i]]; //splice if array
+    };
     return TrialComponent;
 }());
 TrialComponent = __decorate([
     core_1.Component({
         selector: 'trial',
-        template: "\n    <b>It is a {{name}} affair </b>\n    <p> Tasks to Do</p>\n   \n    <button (click)=\"toggleTasks()\">{{showtasks ? \"Hide\" : \"Show\"  }} Tasks</button> <hr>\n    <div *ngIf=\"showtasks\">\n        <ul>\n            <li *ngFor=\" let key of objectKeys(todo);\"><b>{{key}}</b>: {{todo[key]}}</li>\n        </ul>\n    </div>\n\n    ",
+        template: "\n    <b>It is a {{name}} affair </b>\n    <p> Tasks to Do</p>\n   \n    <button (click)=\"toggleTasks()\">{{showtasks ? \"Hide\" : \"Show\"  }} Tasks</button> <hr>\n    <div *ngIf=\"showtasks\">\n        <ul>\n            <li *ngFor=\" let key of objectKeys(todo); let i = index\"><b>{{key}}</b>: {{todo[key]}}\n            <button (click)=\"deleteTask(i)\">X</button></li>\n        </ul>\n    </div>\n    <form>\n        <p>Let's add more tasks</p>\n        <label>Day(s)</label>\n        <input type=\"text\" #day/>\n        <label>Task</label>\n        <input type=\"text\" #task/>\n         <button name=\"todoAdd\" \n              (click)=\"addTask({day: day.value, task: task.value}); day.value=''; task.value='' \">add</button>\n    </form>\n    ",
     }),
     __metadata("design:paramtypes", [])
 ], TrialComponent);
 exports.TrialComponent = TrialComponent;
-//   <li ng-repeat="(key, value) in todo">
-//    {{key}}{{ value }}
-// </li>
-// <li *ngFor=" let key of objectKeys(todo);">{{key}}:{{todo[key]}}</li> 
 //# sourceMappingURL=trial.component.js.map
