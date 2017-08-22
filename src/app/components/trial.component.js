@@ -9,8 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var posts_services_1 = require("../services/posts.services");
 var TrialComponent = (function () {
-    function TrialComponent() {
+    function TrialComponent(postsService) {
+        var _this = this;
+        this.postsService = postsService;
         this.objectKeys = Object.keys;
         //   runs everytime component is rendered
         console.log('Hello from trial constructor');
@@ -20,6 +23,9 @@ var TrialComponent = (function () {
             'Thur': 'Checkpoints'
         };
         this.showtasks = true;
+        this.postsService.getPosts().subscribe(function (posts) {
+            _this.posts = posts;
+        });
     }
     TrialComponent.prototype.toggleTasks = function () {
         if (this.showtasks == true) {
@@ -34,17 +40,19 @@ var TrialComponent = (function () {
         this.todo[tasks.day] = [tasks.task]; // push if array
     };
     TrialComponent.prototype.deleteTask = function (i) {
-        console.log("deleted " + Object.keys(this.todo)[i] + " tasks");
+        alert("deleted " + Object.keys(this.todo)[i] + " tasks");
         delete this.todo[Object.keys(this.todo)[i]]; //splice if array
     };
     return TrialComponent;
 }());
 TrialComponent = __decorate([
     core_1.Component({
+        moduleId: module.id,
         selector: 'trial',
-        template: "\n    <b>It is a {{name}} affair </b>\n    <p> Tasks to Do</p>\n   \n    <button (click)=\"toggleTasks()\">{{showtasks ? \"Hide\" : \"Show\"  }} Tasks</button> <hr>\n    <div *ngIf=\"showtasks\">\n        <ul>\n            <li *ngFor=\" let key of objectKeys(todo); let i = index\"><b>{{key}}</b>: {{todo[key]}}\n            <button (click)=\"deleteTask(i)\">X</button></li>\n        </ul>\n    </div>\n    <form>\n        <p>Let's add more tasks</p>\n        <label>Day(s)</label>\n        <input type=\"text\" #day/>\n        <label>Task</label>\n        <input type=\"text\" #task/>\n         <button name=\"todoAdd\" \n              (click)=\"addTask({day: day.value, task: task.value}); day.value=''; task.value='' \">add</button>\n    </form>\n    ",
+        templateUrl: 'trial.component.html',
+        providers: [posts_services_1.PostsService]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [posts_services_1.PostsService])
 ], TrialComponent);
 exports.TrialComponent = TrialComponent;
 //# sourceMappingURL=trial.component.js.map

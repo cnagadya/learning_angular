@@ -1,0 +1,27 @@
+<b>It is a {{name}} affair </b>
+    <p> Tasks to Do</p>
+   
+    <button (click)="toggleTasks()">{{showtasks ? "Hide" : "Show"  }} Tasks</button> <hr>
+    <div *ngIf="showtasks">
+        <ul>
+            <li *ngFor=" let key of objectKeys(todo); let i = index"><b>{{key}}</b>: {{todo[key]}}
+            <button (click)="deleteTask(i)">X</button></li>
+        </ul>
+    </div>
+    <form>
+        <p>Let's add more tasks</p>
+        <label>Day(s)</label>
+        <input type="text" #day/>
+        <label>Task</label>
+        <input type="text" #task/>
+         <button name="todoAdd" 
+              (click)="addTask({day: day.value, task: task.value}); day.value=''; task.value='' ">add</button>
+    </form>
+
+    <h3> API DATA</h3>
+    <ul>
+        <li *ngFor="let post of posts">
+        <b>{{post.title}}</b><br/>
+        {{post.body}}
+        </li>
+    </ul>

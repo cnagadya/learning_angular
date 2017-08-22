@@ -1,29 +1,11 @@
 import { Component } from '@angular/core';
+import { PostsService } from '../services/posts.services';
 
 @Component({
+    moduleId: module.id,
     selector: 'trial',
-    template:
-    `
-    <b>It is a {{name}} affair </b>
-    <p> Tasks to Do</p>
-   
-    <button (click)="toggleTasks()">{{showtasks ? "Hide" : "Show"  }} Tasks</button> <hr>
-    <div *ngIf="showtasks">
-        <ul>
-            <li *ngFor=" let key of objectKeys(todo); let i = index"><b>{{key}}</b>: {{todo[key]}}
-            <button (click)="deleteTask(i)">X</button></li>
-        </ul>
-    </div>
-    <form>
-        <p>Let's add more tasks</p>
-        <label>Day(s)</label>
-        <input type="text" #day/>
-        <label>Task</label>
-        <input type="text" #task/>
-         <button name="todoAdd" 
-              (click)="addTask({day: day.value, task: task.value}); day.value=''; task.value='' ">add</button>
-    </form>
-    `,
+    templateUrl:'trial.component.html',
+    providers: [PostsService]
 })
 export class TrialComponent {
     name: string;
@@ -32,9 +14,10 @@ export class TrialComponent {
     objectKeys = Object.keys;
     todo: todo;
     showtasks: boolean;
- 
+    posts: Posts[];
 
-    constructor() {
+
+    constructor(private postsService: PostsService) {
         //   runs everytime component is rendered
         console.log('Hello from trial constructor')
         this.name = 'Christine Nagadya';
@@ -43,6 +26,9 @@ export class TrialComponent {
             'Thur': 'Checkpoints'
         };
         this.showtasks = true;
+        this.postsService.getPosts().subscribe(posts => {
+            this.posts= posts;
+        });
 
     }
 
@@ -60,18 +46,20 @@ export class TrialComponent {
         this.todo[tasks.day] = [tasks.task]; // push if array
     }
 
-    deleteTask(i: number ) {
-        console.log("deleted " + Object.keys(this.todo)[i]+ " tasks");
+    deleteTask(i: number) {
+        alert("deleted " + Object.keys(this.todo)[i] + " tasks");
         delete this.todo[Object.keys(this.todo)[i]]; //splice if array
-        
+
     }
 }
 
 interface todo {
-    Mon: string
-    Thur: string
+    Mon: string;
+    Thur: string;
 }
 
-interface i{
-
+interface Posts {
+    id: number;
+    title: string;
+    body: string;
 }
