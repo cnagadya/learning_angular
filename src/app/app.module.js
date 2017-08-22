@@ -11,6 +11,8 @@ var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var app_component_1 = require("./app.component");
 var trial_component_1 = require("./components/trial.component");
+var about_component_1 = require("./components/about.component");
+var app_routing_1 = require("./app.routing");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -18,8 +20,8 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
-        declarations: [app_component_1.AppComponent, trial_component_1.TrialComponent],
+        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routing_1.routing],
+        declarations: [app_component_1.AppComponent, trial_component_1.TrialComponent, about_component_1.AboutComponent],
         bootstrap: [app_component_1.AppComponent]
     })
 ], AppModule);
